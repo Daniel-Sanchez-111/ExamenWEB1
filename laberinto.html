@@ -4,20 +4,17 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>
-		Canvas
+		Laberinto
 	</title>
 	<style type="text/css">
-		/*canvas{
-			background-color: rgb(138, 138, 209);
-		}*/
+
 	</style>
 </head>
 <body>
-	
-	<canvas id="mycanvas" width="550" height="550" >
-		Hola tu navegador no funciona
-	</canvas>
 
+			<canvas id="mycanvas" width="700" height="600" >
+				Hola tu navegador no funciona
+			</canvas>
 	
 
 	<script type="text/javascript">
@@ -31,9 +28,172 @@
 		var paredes = null;
 		var direccion = '';
 		var score = 0;
+		var vida=100000;
 		var speed = 1; 
 		var pause = false;
-		let pared = [new Cuadro(2,2,1,550,"black"),new Cuadro(2,2,550,1,"black"),new Cuadro(548,2,1,550,"black"),new Cuadro(2,548,550,1,"black")];
+
+		//Se crea un arreglo de objetos para las paredes
+		let pared = [
+		/*borde*/new Cuadro(2,2,1,600,"black"),
+		new Cuadro(2,2,700,1,"black"),
+		new Cuadro(2,598,700,1,"black"),
+		new Cuadro(698,2,1,600,"black"),
+		/*borde*/
+		new Cuadro(50,5,1,60,"black"),
+		new Cuadro(53,35,40,1,"black"),
+		new Cuadro(3,105,80,1,"black"),
+		new Cuadro(83,70,1,35,"black"),
+		new Cuadro(86,70,235,1,"black"),
+		new Cuadro(130,35,1,35,"black"),
+		new Cuadro(210,35,1,35,"black"),
+		new Cuadro(170,3,1,35,"black"),
+		new Cuadro(250,3,1,35,"black"),
+		new Cuadro(251,38,35,1,"black"),
+		new Cuadro(320,35,1,35,"black"),
+
+		new Cuadro(360,3,1,70,"black"),
+		new Cuadro(361,73,150,1,"black"),
+		new Cuadro(396,73,1,35,"black"),
+		new Cuadro(431,178,113,1,"black"),
+		new Cuadro(391,3,1,35,"black"),
+		new Cuadro(511,73,1,35,"black"),
+		new Cuadro(431,108,35,1,"black"),
+		new Cuadro(431,108,1,70,"black"),
+		new Cuadro(271,108,85,1,"black"),
+		new Cuadro(221,108,1,35,"black"),
+		new Cuadro(196,145,70,1,"black"),
+		new Cuadro(266,145,1,100,"black"),
+		new Cuadro(266,180,35,1,"black"),
+		new Cuadro(266,245,35,1,"black"),
+
+
+		new Cuadro(301,220,1,25,"black"),
+		new Cuadro(301,220,35,1,"black"),
+		new Cuadro(336,185,1,35,"black"),
+		new Cuadro(336,185,60,1,"black"),
+		new Cuadro(396,185,1,80,"black"),
+		new Cuadro(396,215,35,1,"black"),
+		new Cuadro(366,255,1,10,"black"),
+		new Cuadro(366,265,30,1,"black"),
+		new Cuadro(336,255,30,1,"black"),
+		new Cuadro(431,215,1,35,"black"),
+		new Cuadro(335,305,135,1,"black"),
+		new Cuadro(335,255,1,105,"black"),
+		new Cuadro(265,280,70,1,"black"),
+		new Cuadro(150,315,185,1,"black"),
+		new Cuadro(150,255,1,60,"black"),
+		new Cuadro(50,290,100,1,"black"),
+
+
+		new Cuadro(1,325,110,1,"black"),
+		new Cuadro(190,280,35,1,"black"),
+		new Cuadro(190,215,1,65,"black"),
+		new Cuadro(150,215,40,1,"black"),
+		new Cuadro(80,180,32,1,"black"),
+		new Cuadro(112,180,1,75,"black"),
+		new Cuadro(1,255,112,1,"black"),
+		new Cuadro(40,360,115,1,"black"),
+		new Cuadro(40,360,1,80,"black"),
+		new Cuadro(40,475,75,1,"black"),
+		new Cuadro(40,475,1,35,"black"),
+		new Cuadro(1,545,70,1,"black"),
+		new Cuadro(75,510,1,35,"black"),
+		new Cuadro(75,508,40,1,"black"),
+		new Cuadro(115,510,1,35,"black"),
+		new Cuadro(115,545,35,1,"black"),
+
+		new Cuadro(80,395,1,80,"black"),
+		new Cuadro(115,395,1,120,"black"),
+		new Cuadro(115,395,40,1,"black"),
+		new Cuadro(155,435,1,70,"black"),
+		new Cuadro(155,470,70,1,"black"),
+		new Cuadro(155,435,35,1,"black"),
+		new Cuadro(190,545,1,50,"black"),
+		new Cuadro(190,545,1,50,"black"),
+		new Cuadro(35,580,155,1,"black"),
+
+
+		new Cuadro(190,360,1,75,"black"),
+		new Cuadro(225,360,1,200,"black"),
+		new Cuadro(225,410,30,1,"black"),
+		new Cuadro(265,450,30,1,"black"),
+		new Cuadro(225,490,30,1,"black"),
+		new Cuadro(295,400,40,1,"black"),
+		new Cuadro(335,400,1,150,"black"),
+		new Cuadro(335,440,100,1,"black"),
+		new Cuadro(485,360,1,40,"black"),
+
+		new Cuadro(335,360,175,1,"black"),
+		new Cuadro(425,340,1,20,"black"),
+		new Cuadro(335,400,250,1,"black"),
+		new Cuadro(585,400,1,120,"black"),
+		new Cuadro(585,520,30,1,"black"),
+		new Cuadro(615,520,1,40,"black"),
+
+		new Cuadro(435,440,1,45,"black"),
+		new Cuadro(375,480,1,45,"black"),
+		new Cuadro(375,525,100,1,"black"),
+		new Cuadro(475,440,1,85,"black"),
+		new Cuadro(475,440,70,1,"black"),
+		
+		new Cuadro(545,440,1,120,"black"),
+		new Cuadro(545,560,70,1,"black"),
+		new Cuadro(375,565,135,1,"black"),
+
+		new Cuadro(510,475,1,130,"black"),
+
+		new Cuadro(225,560,30,1,"black"),
+		new Cuadro(225,360,70,1,"black"),
+
+		new Cuadro(295,320,1,40,"black"),
+		new Cuadro(295,400,1,150,"black"),
+
+
+		new Cuadro(155,505,35,1,"black"),
+
+		new Cuadro(113,325,1,36,"black"),
+		new Cuadro(160,315,175,1,"black"),
+		new Cuadro(470,215,1,90,"black"),
+		new Cuadro(510,215,1,145,"black"),
+		new Cuadro(158,111,1,70,"black"),
+		new Cuadro(158,181,70,1,"black"),
+		new Cuadro(228,181,1,100,"black"),
+		new Cuadro(266,180,35,1,"black"),
+		
+
+		new Cuadro(121,108,55,1,"black"),
+		new Cuadro(121,108,1,35,"black"),
+		new Cuadro(45,143,75,1,"black"),
+		new Cuadro(45,143,1,75,"black"),
+		new Cuadro(45,220,35,1,"black"),
+		new Cuadro(80,183,1,37,"black"),
+		new Cuadro(311,143,120,1,"black"),
+		new Cuadro(356,108,1,35,"black"),
+
+		new Cuadro(469,108,1,35,"black"),
+		new Cuadro(469,143,35,1,"black"),
+		new Cuadro(547,39,1,200,"black"),
+		new Cuadro(431,38,115,1,"black"),
+		new Cuadro(549,70,70,1,"black"),
+		new Cuadro(587,38,70,1,"black"),
+		new Cuadro(660,38,1,200,"black"),
+
+
+
+		new Cuadro(660,239,50,1,"black"),
+		new Cuadro(625,169,1,110,"black"),
+		new Cuadro(590,169,35,1,"black"),
+		//por aqui 
+		new Cuadro(590,169,1,35,"black"),
+		new Cuadro(555,279,105,1,"black"),
+		new Cuadro(555,279,1,80,"black"),
+		new Cuadro(640,319,1,165,"black"),
+		new Cuadro(640,459,60,1,"black"),
+
+
+		new Cuadro(587,105,70,1,"black"),
+		];
+
 		var personaje = new Image();
 		var coin = new Image();
 
@@ -48,7 +208,7 @@
 			cv = document.getElementById('mycanvas');
 			ctx = cv.getContext('2d');
 
-			player1 = new Cuadro(70,70,40,40,"red");
+			player1 = new Cuadro(640,550,30,30,"red");
 
 			player2 = new Cuadro(getRandomInt(500),getRandomInt(500),40,40,"yellow");
 
@@ -68,36 +228,45 @@
 			window.requestAnimationFrame(paint)
 
 			ctx.fillStyle = "#ECF3D7";
-			ctx.fillRect(0,0,550,550);
+			ctx.fillRect(0,0,700,600);
 			ctx.lineWidth = 6;
 			ctx.strokeStyle = "#3D3E37";
-			ctx.strokeRect(1,1,548,548);
+
 			ctx.lineWidth = 3;
-			ctx.fillStyle = "#3D3E37";
-			ctx.fillText("SCORE:"+score, 10,20)
-
-			
-
 			//player1.pintar(ctx);
 			ctx.drawImage(personaje,player1.x,player1.y)
 
 			//player2.pintar(ctx);
 			ctx.drawImage(coin,player2.x,player2.y)
+
+			ctx.fillStyle = "#3D3E37";
+			ctx.fillText("Vida:"+vida, 10,20)
+
 			for(let i=0;i<pared.length;i++){
 				paredes = pared[i];
 				paredes.pintar(ctx);
 			}
-
+			
 			if (pause) {
 
 				ctx.fillStyle = "rgba(0,0,0,0.5)";
-				ctx.fillRect(0,0,550,550);
+				ctx.fillRect(0,0,700,600);
 
 				ctx.fillStyle = "white";
-				ctx.fillText('P A U S E', 250,250)
+				ctx.fillText('P A U S E', 300,300)
 
 			}else{
-				update();
+				if (vida<=0) {
+				ctx.fillStyle = "rgba(255,0,0,0.8)";
+				ctx.fillRect(0,0,700,600);
+
+				ctx.fillStyle = "white";
+				ctx.fillText('M O R I S T E', 300,300)
+				vida=0;
+				sound1.pause();
+				}else{
+					update();
+				}
 			}
 			
 			
@@ -110,34 +279,26 @@
 			if (direccion == 'up') {
 				player1.y -= speed; 
 
-				if (player1.y<0) {
-					player1.y = 500;
-				}
+				
 			}
 
 			//abajo
 			if (direccion == 'down') {
 				player1.y += speed;
 
-				if (player1.y>550) {
-					player1.y = 0;
-				} 
+				
 			}
 
 			//izquierda
 			if (direccion == 'left') {
 				player1.x -= speed; 
-				if (player1.x<0) {
-					player1.x = 500;
-				}
+				
 			}
 
 			//derecha
 			if (direccion == 'right') {
 				player1.x += speed; 
-				if (player1.x>550) {
-					player1.x = 0;
-				}
+				
 			} 
 
 			if (player1.se_tocan(player2)) {
@@ -153,6 +314,8 @@
 			}
 			for(var i=0;i<pared.length;i++){
 				if (player1.se_tocan(pared[i])) { 
+					vida-=300;
+					
 					if (direccion == 'up') {
 						player1.y += speed;  
 					}
